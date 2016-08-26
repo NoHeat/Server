@@ -39,12 +39,12 @@ def dynamic_data_entry():
           (unix, date, keyword, value))
 
 #use function params
-#for i in range(10):
-#    dynamic_data_entry()   #for loop to run prog(x10)
-#    time.sleep(1)
-#
-#c.close
-#conn.close()
+for i in range(10):
+    dynamic_data_entry()   #for loop to run prog(x10)
+    time.sleep(1)
+
+c.close
+conn.close()
 
 #read data from database
 def read_from_db():
@@ -71,11 +71,6 @@ def read_from_db():
     print(data)
     for row in data:
         print(row[0])
-
-#use function params  
-#read_from_db()
-#c.close
-#conn.close()
 
 #delete data and update table 
 def del_and_update():
@@ -125,12 +120,12 @@ def insert_picture(conn, picture_file):
         conn.commit()
 
 #use function params
-#conn = create_or_open_db('picture_db.sqlite')
+conn = create_or_open_db('picture_db.sqlite')
 
 #create schema for picture database
-#picture_file = "./pictures/pic.jpg"
-#insert_picture(conn, picture_file)
-#conn.close()
+picture_file = "./pictures/pic.jpg"
+insert_picture(conn, picture_file)
+conn.close()
 
 def extract_picture(cursor, picture_id):
     sql = "SELECT PICTURE, TYPE, FILE_NAME FROM PICTURES WHERE id = :id"
@@ -143,39 +138,39 @@ def extract_picture(cursor, picture_id):
     return filename
 
 #use function params
-#conn = create_or_open_db('picture_db.sqlite')
-#cur = conn.cursor()
-#filename = extract_picture(cur, 1)
-#cur.close()
-#conn.close()
-#Image(filename='./'+filename)
+conn = create_or_open_db('picture_db.sqlite')
+cur = conn.cursor()
+filename = extract_picture(cur, 1)
+cur.close()
+conn.close()
+Image(filename='./'+filename)
 
 #bulk insert pictures into database
-#conn = create_or_open_db('picture_db.sqlite')
-#conn.execute("DELETE FROM PICTURES")
-#for fn in picture_list:
-#    picture_file = "./pictures/"+fn
-#    insert_picture(conn, picture_file)
+conn = create_or_open_db('picture_db.sqlite')
+conn.execute("DELETE FROM PICTURES")
+for fn in picture_list:
+    picture_file = "./pictures/"+fn
+    insert_picture(conn, picture_file)
      
-#for r in conn.execute("SELECT FILE_NAME FROM PICTURES"):
-#    print r[0]
+for r in conn.execute("SELECT FILE_NAME FROM PICTURES"):
+    print r[0]
  
-#conn.close()
+conn.close()
 
 
 #insert data from csv file, method 2
-#con = sqlite3.connect(":memory:") #creates db in RAM
-#cur = con.cursor()
-#cur.execute("CREATE TABLE t (col1, col2);") #col1, col2 should be from csv file
+con = sqlite3.connect(":memory:") #creates db in RAM
+cur = con.cursor()
+cur.execute("CREATE TABLE t (col1, col2);") #col1, col2 should be from csv file
 
-#with open('data.csv','rb') as fin: 
-#    # csv.DictReader uses first line in file for column headings by default
-#    dr = csv.DictReader(fin) # comma is default delimiter
-#    to_db = [(i['col1'], i['col2']) for i in dr]
+with open('data.csv','rb') as fin: 
+    # csv.DictReader uses first line in file for column headings by default
+    dr = csv.DictReader(fin) # comma is default delimiter
+    to_db = [(i['col1'], i['col2']) for i in dr]
 
-#cur.executemany("INSERT INTO t (col1, col2) VALUES (?, ?);", to_db)
-#con.commit()
-#con.close()
+cur.executemany("INSERT INTO t (col1, col2) VALUES (?, ?);", to_db)
+con.commit()
+con.close()
 
 ################################################################################
 #main function
