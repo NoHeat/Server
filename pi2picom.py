@@ -21,6 +21,7 @@ socket.SOCK_DGRAM) # UDP
 #defining what to send over sockets
 sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
 
+#######################################################################
 #script to run on pi2 to recieve data via UDP; recievepi.py
 import socket
 
