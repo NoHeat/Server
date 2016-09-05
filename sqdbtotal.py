@@ -20,6 +20,16 @@ def open_from_file():
             line = line.replace('"','') #loop over each line in file
             data = line.split(",")  #split each line for individual fields
         
+#open from file.csv version 2
+c.execute("CREATE TABLE t (col1, col2);") # use your column names here
+
+with open('data.csv','rb') as fin: # `with` statement available in 2.5+
+    # csv.DictReader uses first line in file for column headings by default
+    dr = csv.DictReader(fin) # comma is default delimiter
+    to_db = [(i['col1'], i['col2']) for i in dr]
+
+cur.executemany("INSERT INTO t (col1, col2) VALUES (?, ?);", to_db)        
+
 #create a table
 def create_table():
     c.execute('CREATE TABLE IF NOT EXISTS rtable(UPC TEXT, Description TEXT)')
